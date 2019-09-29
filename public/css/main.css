@@ -1,0 +1,43 @@
+.cabecera{
+    position: fixed;
+    width: 100%;
+    height: 100px;
+    background-color: #232f3e;
+}
+.buscador{
+    padding: 6px 10px 6px 0;
+    height: 30px;
+    width: 400px;
+    font-size: 15px;
+    text-indent: 8px;
+    margin: 20px 0px 0px 300px;
+    background-color: 0 0;
+    color:#111;
+    cursor: text;
+    border-radius: 4px;
+}
+
+.button-buscar{
+    padding: 6px 10px 6px 0;
+    height: 44px;
+    border-radius: 4px;
+    background-color: #F0C354;
+    border-color:  #F0C354;
+    cursor: pointer;
+    border: 0;
+}
+
+.miCuenta{
+    width: 150px;
+    height: 40px;
+    background-color: #F0C354;
+    border: 0;
+    margin: 0px 0px 0px 200px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.principal{
+    position: absolute;
+    margin: 120px 0px 0px 0px;
+}

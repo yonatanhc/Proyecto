@@ -1,0 +1,40 @@
+.iniciarSesion{
+    width: 400px;
+    height: 500px;
+    border-radius: 4px;
+    position: absolute;
+    z-index: 1000;
+    margin: 50px 0px 0px 400px;
+    box-shadow: 5px 5px 5px 5px #9F9FA3;
+}
+
+h1{
+    text-align: center;
+}
+
+label{
+    margin: 0px 0px 0px 40px;
+}
+
+.ingresar{
+    background-color: #F0C354;
+    cursor: pointer;
+}
+
+.botonRegistrarse,.registrarse{
+    margin: 0px 0px 0px 40px;
+    background-color: #F0C354;
+    cursor: pointer;
+}
+
+input{
+    width: 300px;
+    height: 30px;
+    border: 0;
+    border-radius: 3px;
+    margin: 0px 0px 0px 40px;
+    background-color: #DEDEE0;
+}
+h3{
+    margin: 120px 0px 10px 40px;
+}

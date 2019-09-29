@@ -1,0 +1,39 @@
+[
+    {
+      "usuario": "yonatan",
+      "email": "yonatan@gmail.com",
+      "telefono": "1154637892",
+      "contraseña": "yonatan"
+    },
+    {
+      "usuario": "miguel",
+      "email": "miguel@gmail.com",
+      "telefono": "1151234592",
+      "contraseña": "miguel"
+    },
+    {
+      "usuario": "maribel",
+      "email": "maribel@gmail.com",
+      "telefono": "1154635672",
+      "contraseña": "maribel"
+    },
+    {
+      "usuario": "jose",
+      "email": "jose@gmail.com",
+      "telefono": "1198767892",
+      "contraseña": "jose"
+    },
+    {
+      "usuario": "rocio",
+      "email": "rocio@gmail.com",
+      "telefono": "1112345678",
+      "contraseña": "rocio"
+    },
+    {
+        "usuario": "admin",
+        "email": "admin@gmail.com",
+        "telefono": "1154620558",
+        "contraseña": "admin"
+      }
+  
+  ]
