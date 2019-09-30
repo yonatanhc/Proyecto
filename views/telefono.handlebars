@@ -1,0 +1,11 @@
+
+{{#each listaTelefonos}}
+<div class="telefono">
+    <img class="img-telefono" src="img/{{this.imagen}}" id="imagen">
+    <div class="caracteristicas">
+        <p>{{this.marca}}</p>
+        <p>{{this.precio}}</p> 
+    </div> 
+    <button class="carrito">Agregar al carrito</button>
+</div> 
+{{/each}}

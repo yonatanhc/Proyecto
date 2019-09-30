@@ -1,0 +1,27 @@
+.telefono, .caracteristicas,.carrito{
+    float: left;
+    border: 1px solid #ddd;
+    box-shadow: 1px 3px 5px rgba(0,0,0, .5);
+    border-radius: 4px;
+}
+
+.telefono{
+    width: 250px;
+    height: 400px;
+}
+.caracteristicas{
+    width: 210px;
+    height: 80px;
+    margin: 250px 0px 0px 20px;
+    text-align: center;
+    font-weight: bold;
+}
+.carrito{
+    width: 210px;
+    height: 40px;
+    margin: 10px 0px 0px 20px;
+    background-color: rgb(52, 131, 250);
+    border-color: rgb(52, 131, 250);
+    cursor: pointer;
+    color: white;
+}

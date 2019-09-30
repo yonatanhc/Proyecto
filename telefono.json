@@ -1,0 +1,13 @@
+[
+    {
+      "marca": "iphone 11 Pro Max",
+      "precio": "$ 100.00",
+      "imagen": "iphone11ProMax.png"
+    },
+    {
+        "marca": "samsung Galaxy S9",
+        "precio": "$ 50.000",
+        "imagen": "samsungGalaxyS9.png"
+    }
+  
+  ]

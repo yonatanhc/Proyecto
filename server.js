@@ -38,7 +38,24 @@ app.post('/sesion',(req,res)=>{
     validarDatos(
         req,
         () => res.sendFile(path.join(__dirname,'public/html/crearCuenta.html')),
-        () => ingresarPerfil(req,res));
+        (usuario) => ingresarPerfil(usuario,res));
+});
+
+
+app.get("/buscar",(req,res)=>{
+    fs.readFile(path.join(__dirname, "telefono.json"), (error, data) => {
+        if(!error){
+            let telefonos = JSON.parse(data);
+            if (req.query.buscar) {
+                telefonos = telefonos.filter(telefono => telefono.marca.includes(req.query.buscar));  
+            }
+
+            res.render('telefono', {
+
+                listaTelefonos: telefonos
+            });
+        }
+    });
 });
 
 const server = app.listen(3000,()=>{
@@ -49,18 +66,25 @@ function validarDatos(datos,err,ok){
     fs.readFile(path.join(__dirname, "usuario.json"), (error, data) => {
         if(!error){
             let usuarios = JSON.parse(data)
-            let coincidencia = usuarios.some((valor)=>{
-                return (valor.usuario == datos.body.usuario && valor.contraseña == datos.body.contraseña)
+            let coincidencia;
+            let encontrado = false;
+            usuarios.forEach((valor)=>{
+                if(valor.usuario == datos.body.usuario && valor.contraseña == datos.body.contraseña){
+                    coincidencia = valor;
+                    encontrado = true;
+                }
             });
-            if(coincidencia) ok();
+            if(encontrado) ok(coincidencia);
             else err();
         }
     });
  
 }
 
-function ingresarPerfil(req,res){
-    res.sendFile(path.join(__dirname,'public/html/perfil.html'));;
+function ingresarPerfil(usuario,res){
+    res.render('perfil',{
+        datosUsuario:usuario});
+
     const io = socketio(server);
 
     io.on('connection',(socket)=>{

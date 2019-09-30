@@ -4,6 +4,8 @@ const ventana = document.getElementById("ventanaChat");
 const menaje = document.getElementById("mensaje");
 const enviar = document.getElementById("enviar");
 
+// Declaramos objeto para request AJAX
+let xhr = new XMLHttpRequest();
 
 enviar.addEventListener("click",function(){
     socket.emit("miMensaje",{
