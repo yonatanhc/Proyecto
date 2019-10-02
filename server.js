@@ -81,18 +81,19 @@ function validarDatos(datos,err,ok){
  
 }
 
-function ingresarPerfil(usuario,res){
+function ingresarPerfil(data,res){
     res.render('perfil',{
-        datosUsuario:usuario});
+        datosUsuario:data});
 
     const io = socketio(server);
 
     io.on('connection',(socket)=>{
         console.log("conectado");
         socket.on("miMensaje",(dato)=>{
-            dato.usuario = req.body.usuario;
+            dato.usuario = data.usuario;
             io.sockets.emit("mensajeServidor",dato);
         });
     });
 
 }
+

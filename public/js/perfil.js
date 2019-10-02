@@ -3,11 +3,14 @@ const socket = io();
 const ventana = document.getElementById("ventanaChat");
 const menaje = document.getElementById("mensaje");
 const enviar = document.getElementById("enviar");
+const salir = document.getElementById("salir");
+const micuenta = document.getElementById("miCuenta");
 
-// Declaramos objeto para request AJAX
-let xhr = new XMLHttpRequest();
+micuenta.classList.add("oculto");
+salir.classList.toggle("oculto");
 
 enviar.addEventListener("click",function(){
+
     socket.emit("miMensaje",{
         mensaje: mensaje.value
     });
@@ -20,10 +23,6 @@ enviar.addEventListener("click",function(){
     });
 });
 
-/*
-    <label for="usuario">Usuario:</label><br>
-    <input type="text" name="usuario" placeholder="Ingrese usuario"> <br><br>
-
-    const usuario = document.getElementById("usuario");
-    usuario: usuario.value,
-*/
+salir.addEventListener("click",function(){
+    location = "/";
+});
