@@ -1,11 +1,19 @@
 
 {{#each listaTelefonos}}
-<div class="telefono">
+<div class="telefono" id="telefono" onclick="mostrarDatos('{{this._id}}')">
     <img src="img/{{this.imagen}}" id="imagen" width="200px" height="250px">
     <div class="caracteristicas">
-        <p>{{this.marca}}</p>
-        <p>{{this.precio}}</p> 
+        <p id="modelo">{{this.modelo}}</p>
+        <p id="precio">{{this.precio}}</p> 
     </div> 
-    <button class="carrito">Agregar al carrito</button>
+    <button class="carrito" id="carrito">Agregar al carrito</button>
 </div> 
 {{/each}}
+
+<script>
+    function mostrarDatos(idTelefono){
+        let url = "/homeTelefono?"
+        url += "idTelefono=" + idTelefono;
+        location = url;
+    }
+</script>

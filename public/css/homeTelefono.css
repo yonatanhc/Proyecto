@@ -1,0 +1,55 @@
+#ventanaChat{
+    width:370px; 
+    height: 250px;
+    color: #aaaaaa;
+    border: 1px solid #ddd;
+    box-shadow: 1px 3px 5px rgba(0,0,0, .5);
+    margin: 12px;
+    border-radius: 4px;
+    overflow: scroll;
+ }
+
+ #ventanaChat p {
+     color: #aaa;
+     padding: 14px 0;
+     margin: 0 20px;
+ }
+ .input-chat,.button-chat{
+     width: 370px;
+     height: 30px;
+     margin: 0px 0px 0px 12px;
+     border-radius: 4px;
+    border: 0;
+ }
+ .input-chat{
+     background-color: #E6E6E9;
+ }
+ .button-chat{
+    margin: 20px 0px 0px 12px;
+    background-color: #646498;
+    cursor: pointer;
+    height: 30px;
+    color: white;
+ }
+
+ .div-img-telefono{
+    width: 300px;
+    height: 450px;
+ }
+
+ .div-caract-telefono{
+    width: 300px;
+    height: 450px;
+ }
+
+ .chat{
+    width: 400px;
+    height: 450px;
+ }
+
+ .div-img-telefono,.div-caract-telefono,.chat{
+    float: left;
+    margin: 20px ;
+    border: 1px solid #ddd;
+    box-shadow: 1px 3px 5px rgba(0,0,0, .5);
+}

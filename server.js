@@ -2,11 +2,21 @@ const express = require("express");
 const path = require("path");
 const fs = require('fs');
 const exphbs = require('express-handlebars');
-const socketio = require("socket.io");
 const app = express();
-
 const bodyParser = require('body-parser');
+const session = require('express-session');
 
+const mongodb = require('mongodb');
+const MongoClient = mongodb.MongoClient;
+const dbURL = "mongodb://localhost:27017";
+const dbConfig = { useNewUrlParser: true, useUnifiedTopology: true};
+const dbName = "archivos";
+
+app.use(session({
+    secret: '2C44-4D44-WppQ38S',
+    resave: true,
+    saveUninitialized: true
+}));
 
 // Parser para interpretar datos  en el body de un request
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -26,7 +36,36 @@ app.get("/",(req,res)=>{
 });
 
 app.get("/login",(req,res)=>{
-    res.sendFile(path.join(__dirname,'public/html/login.html'));
+    if (req.session.usuario !== undefined) {
+        res.render('perfil',{
+            datosUsuario : req.session.usuario, 
+        });
+    } else {
+        res.sendFile(path.join(__dirname,'public/html/login.html')); 
+    }
+});
+
+app.get("/homeTelefono",(req,res)=>{
+    console.log(req.query.idTelefono);
+    MongoClient.connect(dbURL, dbConfig, (err, client) => {
+        if (!err) {
+            const archivo = client.db(dbName);
+            const colTelefonos = archivo.collection("telefonos");
+            colTelefonos.find({_id: req.query.idTelefono}).toArray((err, telefono) => {
+                client.close();
+                if (!err) {
+                    console.log(telefono);
+                }
+            });
+        }
+    });
+    res.render('homeTelefono');
+});
+
+app.get("/salir",(req,res)=>{
+    console.log("salir");
+    req.session.destroy();
+    res.render('home');
 });
 
 app.get("/registrarse",(req,res)=>{
@@ -35,26 +74,51 @@ app.get("/registrarse",(req,res)=>{
 
 
 app.post('/sesion',(req,res)=>{
-    validarDatos(
-        req,
-        () => res.sendFile(path.join(__dirname,'public/html/crearCuenta.html')),
-        (usuario) => ingresarPerfil(usuario,res));
+    MongoClient.connect(dbURL, dbConfig, (err, client) => {
+        if (!err) {
+            const archivo = client.db(dbName);
+            const colUsuarios = archivo.collection("usuarios");
+            colUsuarios.find({}).toArray((err, usuarios) => {
+                client.close();
+                if (!err) {
+                    usuarios.forEach(usuario=>{
+                        if(usuario.usuario == req.body.usuario && usuario.contraseña == req.body.contraseña){
+                            req.session.usuario = usuario;
+                            res.render('perfil',{
+                                datosUsuario : req.session.usuario, 
+                            });
+                        }
+                    });
+                }
+            });
+        }
+    });
 });
 
 
 app.get("/buscar",(req,res)=>{
-    fs.readFile(path.join(__dirname, "telefono.json"), (error, data) => {
-        if(!error){
-            let telefonos = JSON.parse(data);
-            if (req.query.buscar) {
-                telefonos = telefonos.filter(telefono => telefono.marca.includes(req.query.buscar));  
+    
+    MongoClient.connect(dbURL, dbConfig, (err, client) => {
+    if (!err) {
+
+        const archivo = client.db(dbName);
+
+        const colTelefonos = archivo.collection("telefonos");
+        
+        colTelefonos.find({ marca: req.query.buscar }).toArray((err, telefonos) => {
+            client.close();
+            if (!err) {
+                res.render('telefono', {
+                    listaTelefonos: telefonos
+                });
+            } else {
+                console.log("No se pudo consultar la colección de telefonos: " + err);
             }
+        });
 
-            res.render('telefono', {
-
-                listaTelefonos: telefonos
-            });
-        }
+    } else {
+        console.log("ERROR AL CONECTAR: " + err);
+    }
     });
 });
 
@@ -62,25 +126,7 @@ const server = app.listen(3000,()=>{
     console.log("corriendo en el puerto 3000...");
 });
 
-function validarDatos(datos,err,ok){
-    fs.readFile(path.join(__dirname, "usuario.json"), (error, data) => {
-        if(!error){
-            let usuarios = JSON.parse(data)
-            let coincidencia;
-            let encontrado = false;
-            usuarios.forEach((valor)=>{
-                if(valor.usuario == datos.body.usuario && valor.contraseña == datos.body.contraseña){
-                    coincidencia = valor;
-                    encontrado = true;
-                }
-            });
-            if(encontrado) ok(coincidencia);
-            else err();
-        }
-    });
- 
-}
-
+/*
 function ingresarPerfil(data,res){
     res.render('perfil',{
         datosUsuario:data});
@@ -96,4 +142,5 @@ function ingresarPerfil(data,res){
     });
 
 }
+*/
 
