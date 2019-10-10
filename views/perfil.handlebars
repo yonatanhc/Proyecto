@@ -1,0 +1,18 @@
+<div class="datosPersonales">
+    <h1>Bienvenido {{usuario.usuario}}</h1>
+</div>
+<div class="carrito-perfil">
+    {{#each carrito}}
+        <p>{{this.modelo}}</p>
+        <p>{{this.precio}}</p>
+    {{/each}}
+    <button class="comprar">Comprar</button>
+</div>
+
+<script>
+    const salir = document.getElementById("salir");
+    salir.classList.remove("oculto");
+    salir.onclick = function(){
+        location = '/salir';
+    }
+</script>

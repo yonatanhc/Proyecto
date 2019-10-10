@@ -1,6 +1,6 @@
 #ventanaChat{
     width:370px; 
-    height: 250px;
+    height: 300px;
     color: #aaaaaa;
     border: 1px solid #ddd;
     box-shadow: 1px 3px 5px rgba(0,0,0, .5);
@@ -33,18 +33,18 @@
  }
 
  .div-img-telefono{
-    width: 300px;
-    height: 450px;
+    width: 400px;
+    height: 500px;
  }
 
  .div-caract-telefono{
     width: 300px;
-    height: 450px;
+    height: 500px;
  }
 
  .chat{
     width: 400px;
-    height: 450px;
+    height: 500px;
  }
 
  .div-img-telefono,.div-caract-telefono,.chat{
@@ -53,3 +53,23 @@
     border: 1px solid #ddd;
     box-shadow: 1px 3px 5px rgba(0,0,0, .5);
 }
+
+h1,.p-home{
+   font-family:Proxima Nova,-apple-system,Helvetica Neue,Helvetica,Roboto,Arial,sans-serif;
+   text-align: center;
+}
+.p-home{
+   color:#999;
+   font-size: 17px;
+}
+
+.carrito-home{
+   position: absolute;
+   width: 250px;
+   height: 40px;
+   margin: 100px 0px 0px 20px;
+   background-color: rgb(52, 131, 250);
+   border-color: rgb(52, 131, 250);
+   cursor: pointer;
+   color: white;
+  

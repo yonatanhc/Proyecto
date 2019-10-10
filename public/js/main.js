@@ -2,9 +2,8 @@ const buscador = document.getElementById("buscador");
 const buttonBuscador = document.getElementById("buttonBuscador");
 const cuenta = document.getElementById("miCuenta");
 
-
 cuenta.onclick= function(){
-    location = '/login';
+    location = '/iniciarSesion';
 }
 
 buttonBuscador.onclick = function(){
@@ -15,3 +14,4 @@ buttonBuscador.onclick = function(){
     }
     location = url;
 }
+

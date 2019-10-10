@@ -1,8 +1,12 @@
+{{#each telefono}}
 <div class="div-img-telefono">
-
+    <img src="img/{{this.imagen}}" id="imagen" width="350px" height="500px">     
 </div>
 <div class="div-caract-telefono">
-
+        <h1>{{this.modelo}}</h1>
+        <h1>{{this.precio}}</h1>
+        <p class="p-home">{{this.descripcion}}</p>
+        <button class="carrito-home" id="carrito">Agregar al carrito</button>
 </div>
 <div class="chat">
         
@@ -13,3 +17,5 @@
 
         <button id="enviar" class="button-chat">enviar</button>
 </div>
+
+{{/each}}

@@ -1,6 +1,5 @@
 const express = require("express");
 const path = require("path");
-const fs = require('fs');
 const exphbs = require('express-handlebars');
 const app = express();
 const bodyParser = require('body-parser');
@@ -35,10 +34,26 @@ app.get("/",(req,res)=>{
     res.render('home');
 });
 
-app.get("/login",(req,res)=>{
+app.get("/carrito",(req,res)=>{
+    if (req.session.usuario !== undefined) {
+        req.session.carrito.push({
+            modelo:req.query.modelo,
+            precio:req.query.precio
+        });
+        res.render('perfil',{
+            usuario : req.session.usuario,
+            carrito: req.session.carrito
+        });
+    } else {
+        res.sendFile(path.join(__dirname,'public/html/login.html')); 
+    }
+});
+
+app.get("/iniciarSesion",(req,res)=>{
     if (req.session.usuario !== undefined) {
         res.render('perfil',{
-            datosUsuario : req.session.usuario, 
+            usuario : req.session.usuario,
+            carrito: req.session.carrito
         });
     } else {
         res.sendFile(path.join(__dirname,'public/html/login.html')); 
@@ -46,24 +61,30 @@ app.get("/login",(req,res)=>{
 });
 
 app.get("/homeTelefono",(req,res)=>{
-    console.log(req.query.idTelefono);
     MongoClient.connect(dbURL, dbConfig, (err, client) => {
         if (!err) {
             const archivo = client.db(dbName);
             const colTelefonos = archivo.collection("telefonos");
-            colTelefonos.find({_id: req.query.idTelefono}).toArray((err, telefono) => {
+            colTelefonos.find({modelo: req.query.modelo}).toArray((err, Untelefono) => {
                 client.close();
                 if (!err) {
-                    console.log(telefono);
+                    res.render('homeTelefono',{
+                        telefono:Untelefono
+                    });
+                }
+                else{
+                    console.log("error al abrir la colleccion");
                 }
             });
         }
+        else{
+            console.log("error al abrir el archivo");
+        }
     });
-    res.render('homeTelefono');
+    
 });
 
 app.get("/salir",(req,res)=>{
-    console.log("salir");
     req.session.destroy();
     res.render('home');
 });
@@ -73,26 +94,26 @@ app.get("/registrarse",(req,res)=>{
 });
 
 
-app.post('/sesion',(req,res)=>{
-    MongoClient.connect(dbURL, dbConfig, (err, client) => {
-        if (!err) {
-            const archivo = client.db(dbName);
-            const colUsuarios = archivo.collection("usuarios");
-            colUsuarios.find({}).toArray((err, usuarios) => {
-                client.close();
-                if (!err) {
-                    usuarios.forEach(usuario=>{
-                        if(usuario.usuario == req.body.usuario && usuario.contraseña == req.body.contraseña){
-                            req.session.usuario = usuario;
-                            res.render('perfil',{
-                                datosUsuario : req.session.usuario, 
-                            });
-                        }
-                    });
-                }
-            });
-        }
-    });
+app.post('/login',(req,res)=>{
+    if(req.body.user && req.body.password){
+        validarUser(req.body.user,req.body.password,resultado =>{
+            if(resultado){
+                req.session.usuario = resultado;
+                req.session.carrito = [];
+                res.render('perfil',{
+                    usuario : req.session.usuario,
+                    carrito: req.session.carrito
+                })
+            }
+            else{
+                req.session.destroy();
+                res.sendFile(path.join(__dirname,'public/html/login.html'));
+            }
+        });
+    }
+    else{
+        res.sendFile(path.join(__dirname,'public/html/login.html'));
+    }
 });
 
 
@@ -144,3 +165,17 @@ function ingresarPerfil(data,res){
 }
 */
 
+function validarUser(usr, pwd, callback) {
+    MongoClient.connect(dbURL, dbConfig, (err, client) => {
+        if(!err) {
+            const colUsuarios = client.db(dbName).collection("usuarios");
+            colUsuarios.findOne({ usuario: usr, contraseña: pwd }, (err, resConsulta) => {
+                client.close();
+                if (!err) {
+                    callback(resConsulta);
+                }
+            });
+        }
+    });
+  
+}
