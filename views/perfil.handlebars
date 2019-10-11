@@ -1,11 +1,16 @@
-<div class="datosPersonales">
+<div class="datos-perfil">
     <h1>Bienvenido {{usuario.usuario}}</h1>
 </div>
 <div class="carrito-perfil">
+    <h1>Carrito</h1>
     {{#each carrito}}
-        <p>{{this.modelo}}</p>
-        <p>{{this.precio}}</p>
+        <div class="nuevo-producto">{{this.modelo}}</div>
+        <div class="precio-producto">{{this.precio}}</div>
     {{/each}}
+</div>
+<div class="div-comprar">
+    <h1>Total</h1>
+    <h1>0</h1>
     <button class="comprar">Comprar</button>
 </div>
 
