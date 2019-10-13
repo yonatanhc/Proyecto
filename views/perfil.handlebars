@@ -5,12 +5,12 @@
     <h1>Carrito</h1>
     {{#each carrito}}
         <div class="nuevo-producto">{{this.modelo}}</div>
-        <div class="precio-producto">{{this.precio}}</div>
+        <div class="precio-producto">$ {{this.precio}}</div>
     {{/each}}
 </div>
 <div class="div-comprar">
     <h1>Total</h1>
-    <h1>0</h1>
+    <h1>$ {{total}}</h1>
     <button class="comprar">Comprar</button>
 </div>
 

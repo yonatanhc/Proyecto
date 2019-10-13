@@ -1,6 +1,7 @@
 const express = require("express");
 const path = require("path");
 const exphbs = require('express-handlebars');
+const socketio = require("socket.io");
 const app = express();
 const bodyParser = require('body-parser');
 const session = require('express-session');
@@ -38,11 +39,13 @@ app.get("/carrito",(req,res)=>{
     if (req.session.usuario !== undefined) {
         req.session.carrito.push({
             modelo:req.query.modelo,
-            precio:req.query.precio
+            precio:req.query.precio,
         });
+        req.session.total = req.session.total + Number(req.query.precio);
         res.render('perfil',{
             usuario : req.session.usuario,
-            carrito: req.session.carrito
+            carrito: req.session.carrito,
+            total : req.session.total
         });
     } else {
         res.sendFile(path.join(__dirname,'public/html/login.html')); 
@@ -53,7 +56,8 @@ app.get("/iniciarSesion",(req,res)=>{
     if (req.session.usuario !== undefined) {
         res.render('perfil',{
             usuario : req.session.usuario,
-            carrito: req.session.carrito
+            carrito: req.session.carrito,
+            total: req.session.total
         });
     } else {
         res.sendFile(path.join(__dirname,'public/html/login.html')); 
@@ -65,12 +69,16 @@ app.get("/homeTelefono",(req,res)=>{
         if (!err) {
             const archivo = client.db(dbName);
             const colTelefonos = archivo.collection("telefonos");
-            colTelefonos.find({modelo: req.query.modelo}).toArray((err, Untelefono) => {
+            colTelefonos.findOne({modelo: req.query.modelo},(err, telefono) => {
                 client.close();
                 if (!err) {
                     res.render('homeTelefono',{
-                        telefono:Untelefono
+                        telefono:telefono,
+                        usuario: req.session.usuario
                     });
+                    if(req.session.usuario != undefined){
+                        conectarComentarios(telefono);
+                    }
                 }
                 else{
                     console.log("error al abrir la colleccion");
@@ -100,9 +108,11 @@ app.post('/login',(req,res)=>{
             if(resultado){
                 req.session.usuario = resultado;
                 req.session.carrito = [];
+                req.session.total = 0;
                 res.render('perfil',{
                     usuario : req.session.usuario,
-                    carrito: req.session.carrito
+                    carrito: req.session.carrito,
+                    total : req.session.total
                 })
             }
             else{
@@ -147,24 +157,6 @@ const server = app.listen(3000,()=>{
     console.log("corriendo en el puerto 3000...");
 });
 
-/*
-function ingresarPerfil(data,res){
-    res.render('perfil',{
-        datosUsuario:data});
-
-    const io = socketio(server);
-
-    io.on('connection',(socket)=>{
-        console.log("conectado");
-        socket.on("miMensaje",(dato)=>{
-            dato.usuario = data.usuario;
-            io.sockets.emit("mensajeServidor",dato);
-        });
-    });
-
-}
-*/
-
 function validarUser(usr, pwd, callback) {
     MongoClient.connect(dbURL, dbConfig, (err, client) => {
         if(!err) {
@@ -177,5 +169,17 @@ function validarUser(usr, pwd, callback) {
             });
         }
     });
-  
 }
+
+function conectarComentarios(telefono){
+    const io = socketio(server);
+    io.on('connection',(socket)=>{
+        console.log("conectado");
+        socket.join(telefono._id);
+        socket.on("mi-mensaje",(dato)=>{
+            io.to(telefono._id).emit("mensaje-servidor",dato);
+        });
+    });
+
+}
+    

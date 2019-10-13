@@ -1,10 +1,10 @@
 
 {{#each listaTelefonos}}
 <div class="telefono" id="telefono" >
-    <img src="img/{{this.imagen}}" id="imagen" width="200px" height="250px" onclick="mostrarDatos('{{this.modelo}}')">
+    <img src="img/{{this.imagen.imagen1}}" id="imagen" width="200px" height="250px" onclick="mostrarDatos('{{this.modelo}}')">
     <div class="caracteristicas">
         <p id="modelo">{{this.modelo}}</p>
-        <p id="precio">{{this.precio}}</p> 
+        <p id="precio"> $ {{this.precio}}</p> 
     </div> 
     <button class="carrito" onclick="carrito('{{this.modelo}}','{{this.precio}}')">Agregar al carrito</button>
 </div> 

@@ -1,21 +1,49 @@
-{{#each telefono}}
+
 <div class="div-img-telefono">
-    <img src="img/{{this.imagen}}" id="imagen" width="350px" height="500px">     
+        <div class="miniatura-telefono" id="miniatura-telefono">
+                <div class="miniatura" onclick = "zoomMiniatura('{{telefono.imagen.imagen1}}')"><img src="img/{{telefono.imagen.imagen1}}" width="60px" height="70px"></div>
+                <div class="miniatura" onclick = "zoomMiniatura('{{telefono.imagen.imagen2}}')"><img src="img/{{telefono.imagen.imagen2}}" width="60px" height="70px"></div>
+                <div class="miniatura" onclick = "zoomMiniatura('{{telefono.imagen.imagen3}}')"><img src="img/{{telefono.imagen.imagen3}}" width="60px" height="70px"></div>
+                <div class="miniatura" onclick = "zoomMiniatura('{{telefono.imagen.imagen4}}')"><img src="img/{{telefono.imagen.imagen4}}" width="60px" height="70px"></div>
+        </div>
+        <div class="home-img-telefono" id="home-img-telefono"><img src="img/{{telefono.imagen.imagen1}}" id="imagen"  height="450px"></div> 
 </div>
+
 <div class="div-caract-telefono">
-        <h1>{{this.modelo}}</h1>
-        <h1>{{this.precio}}</h1>
-        <p class="p-home">{{this.descripcion}}</p>
+        <h1>{{telefono.modelo}}</h1>
+        <h1>$ {{telefono.precio}}</h1>
+        <p class="p-home">{{telefono.descripcion}}</p>
         <button class="carrito-home" id="carrito">Agregar al carrito</button>
 </div>
 <div class="chat">
-        
-        <div id="ventanaChat"></div> <br>
+        <h1>Comentarios</h1>
+        <div class="escribir-comentario">
+                <input type="text" id="mensaje" placeholder="Escriba su comentario..." class="input-chat"><br>
+                <button onclick="enviar('{{usuario.usuario}}')" class="button-chat">enviar</button>
+        </div>
 
-        <label for="mensaje">Comentario:</label><br> 
-        <input type="text" id="mensaje" placeholder="Escriba su comentario..." class="input-chat"><br>
-
-        <button id="enviar" class="button-chat">enviar</button>
+        <div class="ventana-chat" id="ventana-chat"></div> <br>
 </div>
-
-{{/each}}
+<script  src =" /socket.io/socket.io.js " > </script>
+<script>
+        const imgTelefono = document.getElementById("imagen");
+        function zoomMiniatura(imagen){
+                imgTelefono.src ="img/" + imagen;
+        }
+        
+        const socket = io();
+        const mensaje = document.getElementById("mensaje");
+        const ventana = document.getElementById("ventana-chat");
+        function enviar(usuario){
+                socket.emit("mi-mensaje",{
+                        usuario:usuario,
+                        mensaje: mensaje.value
+                });
+                socket.on( "mensaje-servidor" , function(dato){
+                        console.log(dato);
+                        ventana.innerHTML  +=  `<p>
+                        <strong> ${dato.usuario} </strong>: ${dato.mensaje }
+                        </p>`
+                });
+        }
+</script>

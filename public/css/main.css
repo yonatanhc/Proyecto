@@ -20,6 +20,7 @@
 
 .button-buscar{
     padding: 6px 10px 6px 0;
+    width: 40px;
     height: 44px;
     border-radius: 4px;
     background-color: #F0C354;
