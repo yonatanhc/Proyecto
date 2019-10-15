@@ -1,4 +1,4 @@
-.iniciarSesion{
+.iniciarSesion,.crear-cuenta{
     width: 400px;
     height: 500px;
     border-radius: 4px;
@@ -6,6 +6,10 @@
     z-index: 1000;
     margin: 50px 0px 0px 400px;
     box-shadow: 5px 5px 5px 5px #9F9FA3;
+}
+
+.crear-cuenta{
+    height:550px ;
 }
 
 h1{

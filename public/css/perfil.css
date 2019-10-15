@@ -5,6 +5,7 @@
     border-radius: 4px;
     float: left;
     margin: 0px 0px 0px 30px;
+    background-color: white;
 }
 .datos-perfil{
     width: 350px;
@@ -25,24 +26,53 @@
     cursor: pointer;
     color: white;
     font-size: 20px;
+} 
+.contenedor-producto{
+    width: 450px;
+    height: 100px;
+    margin: 15px 0px 0px 10px;
+    border-top: 1px solid #BABABB;
 }
-.nuevo-producto,.precio-producto{
-    border: 1px solid #ddd;
-    box-shadow: 1px 3px 5px rgba(0,0,0, .5);
-    border-radius: 4px;
+.contenedor-producto>div{
+    float: left;
+}
+.img-producto{
+    width: 100px;
+    height: 80px;
+    margin: 7px 0px 0px 20px;
 }
 
-.nuevo-producto,.precio-producto{
-    float: left;
-    height: 40px;
-    margin: 10px 0px 0px 30px;
+.perfil-modelo{
+    width: 100px;
+    margin: 5px 0px 0px 20px;
+}
+#eliminar{
+    margin: 35px 0px 0px 60px;
+    border: 0px;
+    cursor: pointer;
+    height: 25px;
+    font-weight: bold;
+    opacity: 0.7;
+}
+
+#eliminar:hover{
+    opacity: 1;
+    background-color: rgb(52, 131, 250);
+    color: white;
+}
+
+.datos-perfil div{
+    border-top: 1px solid  #BABABB;
+    margin: 30px 10px 0px 10px;
+    height: 50px;
+}
+
+.datos-perfil h2{
+    margin: 5px 0px 0px 0px;
     text-align: center;
 }
-.nuevo-producto{   
-    width: 250px;
-    
-}
-.precio-producto{
-    width: 100px;
-   
+.datos-perfil p{
+    margin: 5px 0px 0px 0px;
+    text-align: center;
+    font-size: 20px;
 }

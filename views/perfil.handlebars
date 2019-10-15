@@ -1,11 +1,38 @@
 <div class="datos-perfil">
-    <h1>Bienvenido {{usuario.usuario}}</h1>
+    <h1>Datos Personales</h1>
+    <div>
+        <h2>Usuario</h2>
+        <p>{{usuario.usuario}}</p>
+    </div>
+    <div>
+        <h2>Nombre y Apellido</h2>
+        <p>{{usuario.nombre}}</p>
+    </div>
+    <div>
+        <h2>E-Mail</h2>
+        <p>{{usuario.correo}}</p>
+    </div>
+    <div>
+        <h2>Teléfono</h2>
+        <p>{{usuario.telefono}}</p>
+    </div>
+    <div>
+        <h2>DNI</h2>
+        <p>{{usuario.dni}}</p>
+    </div>
+    
 </div>
-<div class="carrito-perfil">
+<div class="carrito-perfil" id="carrito-perfil">
     <h1>Carrito</h1>
     {{#each carrito}}
-        <div class="nuevo-producto">{{this.modelo}}</div>
-        <div class="precio-producto">$ {{this.precio}}</div>
+    <div class="contenedor-producto" id="{{this.modelo}}">
+        <div class="img-producto"><img src="img/{{this.imagen}}" width="50px" alt=""></div>
+        <div class="perfil-modelo">
+            <p>{{this.modelo}}</p>
+            <p>$ {{this.precio}}</p>
+        </div>
+        <button id="eliminar" onclick="eliminar('{{this.modelo}}','{{this.precio}}')">eliminar</button>
+    </div>
     {{/each}}
 </div>
 <div class="div-comprar">
@@ -15,9 +42,17 @@
 </div>
 
 <script>
+    const carrito = document.getElementById("carrito-perfil");
     const salir = document.getElementById("salir");
     salir.classList.remove("oculto");
     salir.onclick = function(){
         location = '/salir';
+        
+    }
+
+    function eliminar(modelo,precio){
+        var producto = document.getElementById(modelo);
+        carrito.removeChild(producto);
+        location = "/eliminar?modelo=" + modelo +"&precio="+precio;
     }
 </script>

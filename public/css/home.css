@@ -1,1 +1,41 @@
+.barra-navegacion{
+    width: 900px;
+    height: 100px;
+    margin: 50px 0px 0px 200px;
+}
+.barra-navegacion div{
+    width: 150px;
+    height: 70px;
+    float: left;
+    margin: 10px;
+    border-radius: 25px;
+    cursor: pointer;
+}
+.barra-navegacion img {
+    width: 150px;
+    height: 70px;
+    border-radius: 25px;
+    box-shadow: 1px 3px 5px rgba(0,0,0, .5);
+}
+.home-top{
+   
+    width: 100%;
+    
+}
 
+.home-top  div{
+    width: 400px;
+    height: 500px;
+    box-shadow: 1px 3px 5px rgba(0,0,0, .5);
+    cursor: pointer;
+    float: left;
+    margin: 40px 0px 0px 180px;
+    background-color: white;
+}
+.home-top img{
+    height: 400px;
+    margin: 0px 0px 0px 60px;
+}
+.home-top h3{
+    text-align: center;
+}

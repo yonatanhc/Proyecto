@@ -1,0 +1,28 @@
+<div class="barra-navegacion">
+        <div onclick="buscar('samsung')"><img src="img/samsung.jpg" ></div>
+        <div onclick="buscar('iphone')"><img src="img/apple.jpg" ></div>
+        <div onclick="buscar('huawei')"><img src="img/huawei.jpg" ></div>
+        <div onclick="buscar('lg')"><img src="img/lg.jpg" ></div>
+        <div onclick="buscar('motorola')"><img src="img/motorola.jpg" ></div>
+</div>
+<div class="home-top">
+    <h1>Los mas Vendidos</h1>
+    <div> <h3>Samsung Galaxy S10</h3> <img src="img/galaxys10.jpg"  onclick="mostrarDatos('Samsung Galaxy S10')"></div>
+    <div><h3>iPhone X</h3><img src="img/iphonex.jpg"  onclick="mostrarDatos('iphone X')"></div>
+    <div><h3>Huawei Mate 10</h3><img src="img/mate10.jpg"  onclick="mostrarDatos('Huawei Mate 10')"></div>
+    <div><h3>Motorola Moto G7</h3><img src="img/motog7.jpg"  onclick="mostrarDatos('Moto G7')"></div>
+    <div><h3>LG Q6</h3><img src="img/lgq6.jpg" onclick="mostrarDatos('LG Q6')"></div>
+</div>
+
+<script>
+    function mostrarDatos(modelo){
+        let url = "/homeTelefono?"
+        url += "modelo=" + modelo;
+        location = url;
+    }
+    function buscar(marca){
+        let url = "/buscar?"
+        url += "buscar=" + marca;
+        location = url;
+    }
+</script>

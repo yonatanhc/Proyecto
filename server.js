@@ -35,11 +35,38 @@ app.get("/",(req,res)=>{
     res.render('home');
 });
 
+app.post('/registrar', (req, res) => {
+    MongoClient.connect(dbURL, dbConfig, (err, client) => {
+        if (!err) {
+        const colUsuarios = client.db(dbName).collection("usuarios");
+        colUsuarios.insertOne({ 
+            usuario: req.body.usuario, 
+            nombre: req.body.nombre,
+            correo:req.body.correo ,
+            telefono:req.body.telefono,
+            dni:req.body.dni,
+            contraseña:req.body.contraseña
+            },
+            (err, result) => {
+                if (!err && result) {
+                    res.sendFile(path.join(__dirname,'public/html/login.html')); 
+                }        
+        });
+
+        } else {
+            console.log("error");
+        }
+    });
+});
+
+
+
 app.get("/carrito",(req,res)=>{
     if (req.session.usuario !== undefined) {
         req.session.carrito.push({
             modelo:req.query.modelo,
             precio:req.query.precio,
+            imagen:req.query.imagen
         });
         req.session.total = req.session.total + Number(req.query.precio);
         res.render('perfil',{
@@ -50,6 +77,21 @@ app.get("/carrito",(req,res)=>{
     } else {
         res.sendFile(path.join(__dirname,'public/html/login.html')); 
     }
+});
+
+app.get("/eliminar",(req,res)=>{
+    for (let i = 0; i < req.session.carrito.length; i++) {
+        var element = req.session.carrito[i];
+        if(element.modelo == req.query.modelo){
+            req.session.carrito.splice(i,1);
+        } 
+    }
+    req.session.total -= req.query.precio;
+    res.render('perfil',{
+        usuario : req.session.usuario,
+        carrito: req.session.carrito,
+        total : req.session.total
+    });
 });
 
 app.get("/iniciarSesion",(req,res)=>{
@@ -176,6 +218,7 @@ function conectarComentarios(telefono){
     io.on('connection',(socket)=>{
         console.log("conectado");
         socket.join(telefono._id);
+        console.log(telefono._id);
         socket.on("mi-mensaje",(dato)=>{
             io.to(telefono._id).emit("mensaje-servidor",dato);
         });

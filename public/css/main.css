@@ -11,7 +11,7 @@
     width: 400px;
     font-size: 15px;
     text-indent: 8px;
-    margin: 20px 0px 0px 300px;
+    margin: 20px 0px 0px 100px;
     background-color: 0 0;
     color:#111;
     cursor: text;
@@ -20,16 +20,19 @@
 
 .button-buscar{
     padding: 6px 10px 6px 0;
-    width: 40px;
+    width: 60px;
     height: 44px;
     border-radius: 4px;
-    background-color: #F0C354;
-    border-color:  #F0C354;
     cursor: pointer;
-    border: 0;
+    border: 4px solid #F0C354;
+    background-color: white;
 }
 
-.miCuenta,.salir{
+.button-buscar:hover{
+    background-color: #F0C354;
+}
+
+.miCuenta,.salir,.inicio{
     width: 150px;
     height: 40px;
     background-color: #F0C354;
@@ -42,7 +45,12 @@
 .principal{
     position: absolute;
     margin: 120px 0px 0px 0px;
+    
 }
 .oculto{
     display: none;
+}
+
+body{
+    background-color: rgb(238, 238, 238);
 }

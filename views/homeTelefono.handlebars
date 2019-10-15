@@ -6,14 +6,14 @@
                 <div class="miniatura" onclick = "zoomMiniatura('{{telefono.imagen.imagen3}}')"><img src="img/{{telefono.imagen.imagen3}}" width="60px" height="70px"></div>
                 <div class="miniatura" onclick = "zoomMiniatura('{{telefono.imagen.imagen4}}')"><img src="img/{{telefono.imagen.imagen4}}" width="60px" height="70px"></div>
         </div>
-        <div class="home-img-telefono" id="home-img-telefono"><img src="img/{{telefono.imagen.imagen1}}" id="imagen"  height="450px"></div> 
+        <div class="home-img-telefono" id="home-img-telefono"><img src="img/{{telefono.imagen.imagen1}}" id="imagen" class="home-img" height="450px"></div> 
 </div>
 
 <div class="div-caract-telefono">
         <h1>{{telefono.modelo}}</h1>
         <h1>$ {{telefono.precio}}</h1>
         <p class="p-home">{{telefono.descripcion}}</p>
-        <button class="carrito-home" id="carrito">Agregar al carrito</button>
+        <button class="carrito-home" onclick="carrito('{{telefono.modelo}}','{{telefono.precio}}','{{telefono.imagen.imagen1}}')">Agregar al carrito</button>
 </div>
 <div class="chat">
         <h1>Comentarios</h1>
@@ -22,28 +22,35 @@
                 <button onclick="enviar('{{usuario.usuario}}')" class="button-chat">enviar</button>
         </div>
 
-        <div class="ventana-chat" id="ventana-chat"></div> <br>
+        <div class="ventana-chat" id="ventana-chat"></div> 
 </div>
 <script  src =" /socket.io/socket.io.js " > </script>
 <script>
-        const imgTelefono = document.getElementById("imagen");
-        function zoomMiniatura(imagen){
-                imgTelefono.src ="img/" + imagen;
-        }
-        
         const socket = io();
         const mensaje = document.getElementById("mensaje");
         const ventana = document.getElementById("ventana-chat");
+        const imgTelefono = document.getElementById("imagen");
+
+        function zoomMiniatura(imagen){
+                imgTelefono.src ="img/" + imagen;
+        }
+
+        function carrito(modelo,precio,imagen){
+                let url = "/carrito?"
+                url += "modelo=" + modelo + "&"+"precio=" + precio+"&"+"imagen=" + imagen;
+                location = url;
+        }
+
         function enviar(usuario){
                 socket.emit("mi-mensaje",{
                         usuario:usuario,
                         mensaje: mensaje.value
-                });
-                socket.on( "mensaje-servidor" , function(dato){
-                        console.log(dato);
-                        ventana.innerHTML  +=  `<p>
+                });      
+        }
+        socket.on( "mensaje-servidor" , function(dato){
+                        ventana.innerHTML +=  `<p>
                         <strong> ${dato.usuario} </strong>: ${dato.mensaje }
                         </p>`
-                });
-        }
+        });
 </script>
+
